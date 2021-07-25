@@ -1,0 +1,11 @@
+{
+  "name": "ray-api",
+  "version": "1.0.0",
+  "description": "Ray, API for notes app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "Priyanshu",
+  "license": "ISC"
+}
