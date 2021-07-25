@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { extend } = require('lodash')
 
 // Model
 const { Note } = require('../models/note.model')
@@ -32,6 +33,36 @@ router
         errorMessage: error.message,
       })
     }
+  })
+router.param('id', async (req, res, next, id) => {
+  try {
+    const note = await Note.findById(id)
+    if (!note) {
+      res.json({success: false, message: 'Unable to get Note'})
+    }
+    req.note = note
+    next()
+  } catch (error) {
+    res.json({
+      success: false,
+      message: 'Unable to retrieve note',
+      errorMessage: error.message,
+    })
+  }
+})
+
+router
+  .route('/:id')
+  .get((req, res) => {
+    let note = req.note
+    res.json({ success: true, note })
+  })
+  .post(async (req, res) => {
+    const noteUpdate = req.body
+    let note = req.note
+    note = extend(note, noteUpdate)
+    note = await note.save()
+    res.json({ success: true, note })
   })
 
 module.exports = router
