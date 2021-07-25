@@ -23,7 +23,6 @@ router
     const note = req.body
     try {
       const noteToAdd = new Note(note)
-      console.log(noteToAdd)
       const noteAdded = await noteToAdd.save()
       res.json({ success: true, noteAdded })
     } catch (error) {
