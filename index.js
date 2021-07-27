@@ -6,6 +6,10 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
+// VerifyTokenMiddleware
+const verifyToken = require('./middlewares/verifyToken.middleware')
+app.use(verifyToken)
+
 // DB Connect
 const initializeDBConnect = require('./db/db.connect')
 initializeDBConnect()
