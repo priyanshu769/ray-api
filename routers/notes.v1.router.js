@@ -5,11 +5,18 @@ const { extend } = require('lodash')
 // Model
 const { Note } = require('../models/note.model')
 
+// Middleware
+const verifyUserLoggedIn = require('../middlewares/verifyUserLoggedIn.middleware')
+router.use(verifyUserLoggedIn)
+
 router
   .route('/')
   .get(async (req, res) => {
     try {
-      const notes = await Note.find({})
+      const findByUserId = {user : {
+        userId: req.userId.userId
+      }}
+      const notes = await Note.find(findByUserId)
       res.json({ success: true, notes })
     } catch (error) {
       res.json({

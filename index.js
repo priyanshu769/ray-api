@@ -6,20 +6,20 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-// VerifyTokenMiddleware
-const verifyToken = require('./middlewares/verifyToken.middleware')
-app.use(verifyToken)
-
 // DB Connect
 const initializeDBConnect = require('./db/db.connect')
 initializeDBConnect()
 
 // Routers
 const notes = require('./routers/notes.v1.router')
-const users = require('./routers/users.v1.router')
+const user = require('./routers/user.v1.router')
+const login = require('./routers/login.v1.router')
+const signup = require('./routers/signup.v1.router')
 
 app.use('/notes', notes)
-app.use('/users', users)
+app.use('/user', user)
+app.use('/login', login)
+app.use('/signup', signup)
 
 app.get("/", (req, res)=> {
     res.send("Ray, API for notes app.")
