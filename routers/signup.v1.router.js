@@ -24,10 +24,10 @@ router.route('/').post(async (req, res) => {
       verifyUser.password = await bcrypt.hash(verifyUser.password, salt)
       const savedUser = await verifyUser.save()
       const token = jwt.sign({ userId: savedUser._id }, secretKey)
-      res.json({
+      return res.json({
         success: true,
         message: 'Signup successful!',
-        savedUser,
+        user: savedUser,
         token,
       })
     } catch (error) {
